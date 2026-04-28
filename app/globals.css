@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "./styles/theme.css";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 22%, white);
+  color: var(--color-ink);
+}
