@@ -1,49 +1,42 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap"
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
-  title: "Meta Ads Expert | Get Consistent Sales Without Wasting Money",
+  title: "Free 1:1 Digital Marketing Consultation",
   description:
-    "Meta Ads expert helping businesses generate consistent leads and sales with a proven system. Stop wasting money on ads and start scaling.",
+    "Get a customized marketing strategy to help your business get customers using Facebook and Instagram ads.",
   openGraph: {
-    title: "Meta Ads Expert | Get Consistent Sales Without Wasting Money",
+    title: "Get 20-50 Customers Every Week Using Facebook & Instagram Ads",
     description:
-      "Meta Ads expert helping businesses generate consistent leads and sales with a proven system. Stop wasting money on ads and start scaling.",
+      "Book a free 1:1 consultation and get a customized marketing strategy for your business.",
     type: "website",
-    url: "https://example.com",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/main-logo-final-cropped.png",
         width: 1200,
         height: 630,
-        alt: "Meta Ads Expert website preview"
-      }
-    ]
+        alt: "Digital marketing consultation",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Meta Ads Expert | Get Consistent Sales Without Wasting Money",
+    title: "Free 1:1 Digital Marketing Consultation",
     description:
-      "Meta Ads expert helping businesses generate consistent leads and sales with a proven system. Stop wasting money on ads and start scaling.",
-    images: ["/opengraph-image"]
-  }
+      "Get a simple, clear plan that actually brings customers.",
+    images: ["/main-logo-final-cropped.png"],
+  },
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
