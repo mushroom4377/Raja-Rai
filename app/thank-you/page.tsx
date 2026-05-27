@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-
+import VimeoThankYouPlayer from "@/components/VimeoThankYouPlayer";
 export const metadata = {
   title: "Thank You | Free Digital Marketing Consultation",
   description: "Your free consultation request has been received.",
@@ -33,6 +32,8 @@ export default function ThankYouPage() {
           customized strategy for your business.
         </p>
 
+        <VimeoThankYouPlayer />
+
         <div className="mt-8 grid gap-3 text-sm text-[#2b2b2b] sm:grid-cols-3">
           <div className="rounded-[8px] border border-[#ded8c9] bg-[#fbfaf6] p-4">
             <strong className="block">Step 1</strong>
@@ -54,12 +55,14 @@ export default function ThankYouPage() {
           </div>
         </div>
 
-        <Link
-          href="/"
+        <a
+          href="https://wa.me/9779822530525"
+          target="_blank"
+          rel="noreferrer"
           className="mt-8 inline-flex h-12 items-center justify-center rounded-[8px] bg-[#0b0b0b] px-6 text-sm font-bold text-white transition hover:bg-[#242424] focus:outline-none focus:ring-4 focus:ring-[#b88a44]/25"
         >
-          Back to Landing Page
-        </Link>
+          Chat with me on WhatsApp
+        </a>
       </section>
     </main>
   );
