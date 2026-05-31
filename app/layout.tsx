@@ -4,17 +4,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
-  title: "Free 1:1 Digital Marketing Consultation",
+  title: "Free 1:1 Digital Marketing Consultation Call",
   description:
-    "Get a customized marketing strategy to help your business get customers using Facebook and Instagram ads.",
+    "Book a free 1:1 consultation call and get a simple digital marketing growth plan for your business.",
   openGraph: {
-    title: "Get 20-50 Customers Every Week Using Facebook & Instagram Ads",
+    title: "Get a Free 1:1 Digital Marketing Consultation Call",
     description:
-      "Book a free 1:1 consultation and get a customized marketing strategy for your business.",
+      "Discover what's stopping your business from getting consistent customers online.",
     type: "website",
     images: [
       {
-        url: "/main-logo-final-cropped.png",
+        url: "/main-logo-transparent.png",
         width: 1200,
         height: 630,
         alt: "Digital marketing consultation",
@@ -23,10 +23,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free 1:1 Digital Marketing Consultation",
+    title: "Free 1:1 Digital Marketing Consultation Call",
     description:
-      "Get a simple, clear plan that actually brings customers.",
-    images: ["/main-logo-final-cropped.png"],
+      "Get a simple growth plan made for your business.",
+    images: ["/main-logo-transparent.png"],
   },
 };
 

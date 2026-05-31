@@ -1,97 +1,74 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import Script from "next/script";
+import { useEffect } from "react";
 
-type FormValues = {
-  fullName: string;
-  email: string;
-  whatsapp: string;
-  businessName: string;
-  website: string;
-  message: string;
-};
-
-type FormErrors = Partial<Record<keyof FormValues, string>>;
-
-const initialValues: FormValues = {
-  fullName: "",
-  email: "",
-  whatsapp: "",
-  businessName: "",
-  website: "",
-  message: "",
-};
-
-function validate(values: FormValues) {
-  const errors: FormErrors = {};
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!values.fullName.trim()) {
-    errors.fullName = "Full Name is required.";
-  }
-
-  if (!values.email.trim()) {
-    errors.email = "Active Email is required.";
-  } else if (!emailPattern.test(values.email)) {
-    errors.email = "Enter a valid email address.";
-  }
-
-  if (!values.whatsapp.trim()) {
-    errors.whatsapp = "WhatsApp Number is required.";
-  }
-
-  if (!values.businessName.trim()) {
-    errors.businessName = "Business Name is required.";
-  }
-
-  return errors;
-}
+const FORM_ROOT_SELECTOR = ".ff-6a1948234432f64a5ebc660a";
 
 export default function CTAForm() {
-  const router = useRouter();
-  const [values, setValues] = useState<FormValues>(initialValues);
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    const root = document.querySelector(FORM_ROOT_SELECTOR);
 
-  function updateValue(field: keyof FormValues, value: string) {
-    setValues((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const nextErrors = validate(values);
-    setErrors(nextErrors);
-
-    if (Object.keys(nextErrors).length > 0) {
+    if (!root) {
       return;
     }
 
-    setIsSubmitting(true);
-    window.setTimeout(() => {
-      router.push("/thank-you");
-    }, 500);
-  }
+    let redirectTimer: number | undefined;
+
+    const redirectAfterFlodeskSuccess = () => {
+      if (root.getAttribute("data-ff-stage") !== "success") {
+        return;
+      }
+
+      redirectTimer = window.setTimeout(() => {
+        window.location.assign("/thanks");
+      }, 1800);
+    };
+
+    const observer = new MutationObserver(redirectAfterFlodeskSuccess);
+
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-ff-stage", "class"],
+      subtree: true,
+    });
+
+    redirectAfterFlodeskSuccess();
+
+    return () => {
+      observer.disconnect();
+
+      if (redirectTimer) {
+        window.clearTimeout(redirectTimer);
+      }
+    };
+  }, []);
 
   return (
     <section
       id="consultation-form"
-      className="bg-white px-5 py-16 sm:px-8 lg:px-10"
+      className="bg-[#070707] px-5 py-20 text-[#f8f3e4] sm:px-8 lg:px-10"
     >
+      <link
+        rel="preload"
+        href="https://assets.flodesk.com/flodesk-sans.css"
+        as="style"
+      />
+      <link rel="stylesheet" href="https://assets.flodesk.com/flodesk-sans.css" />
+
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#b88a44]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
             Book Your Free Call
           </p>
-          <h2 className="mt-3 text-3xl font-semibold leading-tight text-[#121212] sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-semibold leading-tight text-white sm:text-5xl">
             1:1 Consultation
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[#5d5b55]">
+          <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
             Customized Strategy for Your Business
           </p>
-          <div className="mt-8 rounded-[8px] border border-[#ded8c9] bg-[#fbfaf6] p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#b88a44]">
+          <div className="mt-8 rounded-[8px] border border-[var(--line)] bg-[var(--panel)] p-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--brand)]">
               Process of This Consultation
             </p>
             <div className="mt-5 space-y-4">
@@ -108,93 +85,174 @@ export default function CTAForm() {
           </div>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          noValidate
-          className="rounded-[8px] border border-[#ded8c9] bg-[#f8f7f2] p-5 shadow-[0_24px_70px_rgba(18,18,18,0.08)] sm:p-7"
-        >
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Field
-              id="fullName"
-              label="Full Name"
-              placeholder="Enter your full name"
-              value={values.fullName}
-              error={errors.fullName}
-              required
-              onChange={(value) => updateValue("fullName", value)}
+        <div className="rounded-[8px] border border-[var(--line)] bg-[var(--panel-soft)] p-5 shadow-[0_28px_80px_rgba(0,0,0,0.35)] sm:p-7">
+          <div
+            className="ff-6a1948234432f64a5ebc660a"
+            data-ff-el="root"
+            data-ff-version="3"
+            data-ff-type="inline"
+            data-ff-name="inlineNoImage"
+            data-ff-stage="default"
+          >
+            <div
+              data-ff-el="config"
+              data-ff-config="eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJtZXNzYWdlIiwibWVzc2FnZSI6IjxkaXYgZGF0YS1wYXJhZ3JhcGg9XCJ0cnVlXCI+R290IGl0ISBDaGVjayB5b3VyIGluYm94IGZvciBhbiBlbWFpbCB0byBjb25maXJtIHlvdXIgc3Vic2NyaXB0aW9uLjwvZGl2PiIsInJlZGlyZWN0VXJsIjoiIn0sImNvaSI6dHJ1ZSwic2hvd0ZvclJldHVyblZpc2l0b3JzIjp0cnVlLCJub3RpZmljYXRpb24iOmZhbHNlLCJnZHByIjp7ImFjY2VwdHNNYXJrZXRpbmciOmZhbHNlLCJwcml2YWN5UG9saWN5Ijp7ImVuYWJsZWQiOmZhbHNlLCJtYW5kYXRvcnkiOmZhbHNlfX0sInRyYWNraW5nQ29uZmlnIjp7Im1ldGFQaXhlbElkIjoiIiwiY29va2llQmFubmVyRW5hYmxlZCI6ZmFsc2UsImdvb2dsZUFuYWx5dGljc0lkIjoiIn19"
+              style={{ display: "none" }}
             />
-            <Field
-              id="email"
-              label="Active Email"
-              placeholder="Enter your active email"
-              inputMode="email"
-              value={values.email}
-              error={errors.email}
-              required
-              onChange={(value) => updateValue("email", value)}
-            />
-            <Field
-              id="whatsapp"
-              label="WhatsApp Number"
-              placeholder="Enter your WhatsApp number"
-              type="tel"
-              value={values.whatsapp}
-              error={errors.whatsapp}
-              required
-              onChange={(value) => updateValue("whatsapp", value)}
-            />
-            <Field
-              id="businessName"
-              label="Business Name"
-              placeholder="Enter your business name"
-              value={values.businessName}
-              error={errors.businessName}
-              required
-              onChange={(value) => updateValue("businessName", value)}
-            />
-          </div>
+            <div className="ff-6a1948234432f64a5ebc660a__container">
+              <div className="ff-6a1948234432f64a5ebc660a__wrapper">
+                <form
+                  className="ff-6a1948234432f64a5ebc660a__form"
+                  action="https://form.flodesk.com/forms/6a1948234432f64a5ebc660a/submit"
+                  method="post"
+                  data-ff-el="form"
+                >
+                  <div className="ff-6a1948234432f64a5ebc660a__title">
+                    <div style={{ wordBreak: "break-word" }}>
+                      <div data-paragraph="true">
+                        Free 1:1 Consultations Call
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ff-6a1948234432f64a5ebc660a__subtitle">
+                    <div style={{ wordBreak: "break-word" }}>
+                      <div data-paragraph="true">
+                        Book a free Digital Marketing Consultation Call with me
+                        and get a &nbsp; customized digital marketing strategy
+                        plan for your Business!
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="ff-6a1948234432f64a5ebc660a__content fd-form-content"
+                    data-ff-el="content"
+                  >
+                    <div
+                      className="ff-6a1948234432f64a5ebc660a__fields"
+                      data-ff-el="fields"
+                    >
+                      <FlodeskField
+                        id="ff-6a1948234432f64a5ebc660a-firstName"
+                        name="firstName"
+                        placeholder="Enter your full name"
+                        dataTab="firstName:email:fields.whatsapp"
+                        label="Full Name"
+                        required
+                      />
+                      <FlodeskField
+                        id="ff-6a1948234432f64a5ebc660a-email"
+                        name="email"
+                        placeholder="Enter your active email"
+                        dataTab="email::firstName"
+                        label="Active Email"
+                        required
+                      />
+                      <FlodeskField
+                        id="ff-6a1948234432f64a5ebc660a-rUivC8QMzV"
+                        name="fields.whatsapp"
+                        placeholder="Enter your WhatsApp number"
+                        dataTab="fields.whatsapp:firstName:fields.businessName"
+                        label="WhatsApp Number"
+                        required
+                      />
+                      <FlodeskField
+                        id="ff-6a1948234432f64a5ebc660a-ubGsv8taKH"
+                        name="fields.businessName"
+                        placeholder="Enter your business name"
+                        dataTab="fields.businessName:fields.whatsapp:fields.websiteFacebookLink"
+                        label="Business Name"
+                        required
+                      />
+                      <FlodeskField
+                        id="ff-6a1948234432f64a5ebc660a-9GQt5Mj9rR"
+                        name="fields.websiteFacebookLink"
+                        placeholder="Paste your website or Facebook URL"
+                        dataTab="fields.websiteFacebookLink:fields.businessName:submit"
+                        label="Website / Facebook URL"
+                        required
+                      />
+                      <input
+                        type="text"
+                        maxLength={255}
+                        name="confirm_email_address"
+                        style={{ display: "none" }}
+                      />
+                    </div>
 
-          <div className="mt-5 space-y-5">
-            <Field
-              id="website"
-              label="Website / Facebook URL"
-              placeholder="Paste your website or Facebook URL"
-              value={values.website}
-              error={errors.website}
-              onChange={(value) => updateValue("website", value)}
-            />
-
-            <div>
-              <label
-                htmlFor="message"
-                className="mb-2 block text-sm font-bold text-[#22201d]"
-              >
-                Anything you want to say
-              </label>
-              <textarea
-                id="message"
-                value={values.message}
-                onChange={(event) => updateValue("message", event.target.value)}
-                placeholder="Tell me anything important about your business"
-                rows={5}
-                className="w-full resize-none rounded-[8px] border border-[#d4cdbd] bg-white px-4 py-3 text-base text-[#121212] outline-none transition placeholder:text-[#8b877d] focus:border-[#b88a44] focus:ring-4 focus:ring-[#b88a44]/15"
-              />
+                    <div
+                      className="ff-6a1948234432f64a5ebc660a__footer"
+                      data-ff-el="footer"
+                    >
+                      <button
+                        type="submit"
+                        className="ff-6a1948234432f64a5ebc660a__button fd-btn"
+                        data-ff-el="submit"
+                        data-ff-tab="submit"
+                      >
+                        <div>
+                          <span data-draw-element="editable">
+                            Book Free Consultation
+                          </span>
+                        </div>
+                      </button>
+                      <p className="mt-4 text-sm font-medium text-[var(--muted)]">
+                        We respect your privacy. No spam.
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className="ff-6a1948234432f64a5ebc660a__success fd-form-success"
+                    data-ff-el="success"
+                  >
+                    <div className="ff-6a1948234432f64a5ebc660a__success-message">
+                      <div>
+                        <div>
+                          <div data-paragraph="true">
+                            Got it! Check your inbox for an email to confirm
+                            your subscription.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="ff-6a1948234432f64a5ebc660a__error fd-form-error"
+                    data-ff-el="error"
+                  />
+                </form>
+              </div>
             </div>
           </div>
-
-          <p className="mt-5 text-sm font-medium text-[#5d5b55]">
-            We respect your privacy. No spam.
-          </p>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-5 inline-flex h-14 w-full items-center justify-center rounded-[8px] bg-[#0b0b0b] px-7 text-base font-bold text-white shadow-[0_18px_40px_rgba(18,18,18,0.18)] transition hover:-translate-y-0.5 hover:bg-[#242424] focus:outline-none focus:ring-4 focus:ring-[#b88a44]/25 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {isSubmitting ? "Booking..." : "Book Free Consultation"}
-          </button>
-        </form>
+        </div>
       </div>
+
+      <Script id="flodesk-universal" strategy="afterInteractive">
+        {`(function(w, d, t, h, s, n) {
+    w.FlodeskObject = n;
+    var fn = function() {
+      (w[n].q = w[n].q || []).push(arguments);
+    };
+    w[n] = w[n] || fn;
+    var f = d.getElementsByTagName(t)[0];
+    var v = '?v=' + Math.floor(new Date().getTime() / (120 * 1000)) * 60;
+    var sm = d.createElement(t);
+    sm.async = true;
+    sm.type = 'module';
+    sm.src = h + s + '.mjs' + v;
+    f.parentNode.insertBefore(sm, f);
+    var sn = d.createElement(t);
+    sn.async = true;
+    sn.noModule = true;
+    sn.src = h + s + '.js' + v;
+    f.parentNode.insertBefore(sn, f);
+  })(window, document, 'script', 'https://assets.flodesk.com', '/universal', 'fd');`}
+      </Script>
+      <Script id="flodesk-form-handle" strategy="afterInteractive">
+        {`window.fd('form:handle', {
+    formId: '6a1948234432f64a5ebc660a',
+    rootEl: '.ff-6a1948234432f64a5ebc660a',
+  });`}
+      </Script>
     </section>
   );
 }
@@ -202,60 +260,52 @@ export default function CTAForm() {
 function ProcessStep({ step, text }: { step: string; text: string }) {
   return (
     <div className="flex gap-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0b0b0b] text-xs font-bold text-white">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--brand)] text-xs font-bold text-[#070707]">
         {step.replace("Step ", "")}
       </span>
       <div>
-        <strong className="block text-sm text-[#121212]">{step}</strong>
-        <p className="mt-1 text-sm leading-6 text-[#5d5b55]">{text}</p>
+        <strong className="block text-sm text-white">{step}</strong>
+        <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{text}</p>
       </div>
     </div>
   );
 }
 
-function Field({
+function FlodeskField({
   id,
-  label,
+  name,
   placeholder,
-  value,
-  error,
-  onChange,
-  type = "text",
-  inputMode,
+  dataTab,
+  label,
   required = false,
 }: {
-  id: keyof FormValues;
-  label: string;
+  id: string;
+  name: string;
   placeholder: string;
-  value: string;
-  error?: string;
-  onChange: (value: string) => void;
-  type?: string;
-  inputMode?: "email" | "tel" | "text" | "url";
+  dataTab: string;
+  label: string;
   required?: boolean;
 }) {
   return (
-    <div>
-      <label htmlFor={id} className="mb-2 block text-sm font-bold text-[#22201d]">
-        {label}
-        {required ? <span className="text-[#b88a44]"> *</span> : null}
-      </label>
+    <div className="ff-6a1948234432f64a5ebc660a__field fd-form-group">
       <input
         id={id}
-        type={type}
-        inputMode={inputMode}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
+        className="ff-6a1948234432f64a5ebc660a__control fd-form-control"
+        type="text"
+        maxLength={255}
+        name={name}
         placeholder={placeholder}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className="h-12 w-full rounded-[8px] border border-[#d4cdbd] bg-white px-4 text-base text-[#121212] outline-none transition placeholder:text-[#8b877d] focus:border-[#b88a44] focus:ring-4 focus:ring-[#b88a44]/15"
+        data-ff-tab={dataTab}
+        required={required}
       />
-      {error ? (
-        <p id={`${id}-error`} className="mt-2 text-sm font-medium text-[#9f2d20]">
-          {error}
-        </p>
-      ) : null}
+      <label
+        htmlFor={id}
+        className="ff-6a1948234432f64a5ebc660a__label fd-form-label"
+      >
+        <div>
+          <div>{label}</div>
+        </div>
+      </label>
     </div>
   );
 }

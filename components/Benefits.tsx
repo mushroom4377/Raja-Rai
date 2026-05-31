@@ -1,34 +1,41 @@
-const benefits = [
-  "Know exactly why you’re not getting customers",
-  "Get a simple ad strategy that fits your business",
-  "Learn how to turn messages into real sales",
-  "Stop wasting money on things that don’t work",
+const steps = [
+  "Fill up the form",
+  "Receive an email with the appointment link",
+  "Fill the appointment form",
+  "Join the 1:1 consultation call",
+  "Get your customized digital marketing plan for FREE",
 ];
 
 export default function Benefits() {
   return (
-    <section className="bg-[#f8f7f2] px-5 py-16 sm:px-8 lg:px-10">
+    <section className="bg-[#070707] px-5 py-18 text-[#f8f3e4] sm:px-8 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#b88a44]">
-            How You Benefit From This Consultation
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
+            How The Free Consultation Works
           </p>
-          <h2 className="mt-3 text-3xl font-semibold leading-tight text-[#121212] sm:text-5xl">
-            A simple, clear plan that actually brings customers.
+          <h2 className="mt-4 text-3xl font-semibold leading-tight text-white sm:text-5xl">
+            A simple path from confusion to a clear growth plan.
           </h2>
+          <p className="mt-5 text-base leading-8 text-[var(--muted)]">
+            You do not need to figure everything out alone. This call is built
+            to help you see exactly what to fix next.
+          </p>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {benefits.map((benefit) => (
-            <div
-              key={benefit}
-              className="rounded-[8px] border border-[#ded8c9] bg-white p-5 shadow-sm"
+        <div className="mt-12 grid gap-4 md:grid-cols-5">
+          {steps.map((step, index) => (
+            <article
+              key={step}
+              className="rounded-[8px] border border-[var(--line)] bg-[var(--panel)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.18)]"
             >
-              <div className="mb-5 h-1.5 w-14 rounded-full bg-[#b88a44]" />
-              <p className="text-lg font-semibold leading-7 text-[#22201d]">
-                {benefit}
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand)] text-sm font-bold text-[#090909]">
+                {index + 1}
+              </div>
+              <p className="mt-5 text-base font-semibold leading-7 text-[#f6e9c8]">
+                {step}
               </p>
-            </div>
+            </article>
           ))}
         </div>
       </div>
