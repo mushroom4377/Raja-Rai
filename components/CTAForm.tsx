@@ -1,49 +1,8 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect } from "react";
-
-const FORM_ROOT_SELECTOR = ".ff-6a1948234432f64a5ebc660a";
 
 export default function CTAForm() {
-  useEffect(() => {
-    const root = document.querySelector(FORM_ROOT_SELECTOR);
-
-    if (!root) {
-      return;
-    }
-
-    let redirectTimer: number | undefined;
-
-    const redirectAfterFlodeskSuccess = () => {
-      if (root.getAttribute("data-ff-stage") !== "success") {
-        return;
-      }
-
-      redirectTimer = window.setTimeout(() => {
-        window.location.assign("/thanks");
-      }, 1800);
-    };
-
-    const observer = new MutationObserver(redirectAfterFlodeskSuccess);
-
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["data-ff-stage", "class"],
-      subtree: true,
-    });
-
-    redirectAfterFlodeskSuccess();
-
-    return () => {
-      observer.disconnect();
-
-      if (redirectTimer) {
-        window.clearTimeout(redirectTimer);
-      }
-    };
-  }, []);
-
   return (
     <section
       id="consultation-form"
@@ -96,7 +55,7 @@ export default function CTAForm() {
           >
             <div
               data-ff-el="config"
-              data-ff-config="eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJtZXNzYWdlIiwibWVzc2FnZSI6IjxkaXYgZGF0YS1wYXJhZ3JhcGg9XCJ0cnVlXCI+R290IGl0ISBDaGVjayB5b3VyIGluYm94IGZvciBhbiBlbWFpbCB0byBjb25maXJtIHlvdXIgc3Vic2NyaXB0aW9uLjwvZGl2PiIsInJlZGlyZWN0VXJsIjoiIn0sImNvaSI6dHJ1ZSwic2hvd0ZvclJldHVyblZpc2l0b3JzIjp0cnVlLCJub3RpZmljYXRpb24iOmZhbHNlLCJnZHByIjp7ImFjY2VwdHNNYXJrZXRpbmciOmZhbHNlLCJwcml2YWN5UG9saWN5Ijp7ImVuYWJsZWQiOmZhbHNlLCJtYW5kYXRvcnkiOmZhbHNlfX0sInRyYWNraW5nQ29uZmlnIjp7Im1ldGFQaXhlbElkIjoiIiwiY29va2llQmFubmVyRW5hYmxlZCI6ZmFsc2UsImdvb2dsZUFuYWx5dGljc0lkIjoiIn19"
+              data-ff-config="eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJyZWRpcmVjdCIsIm1lc3NhZ2UiOiI8ZGl2IGRhdGEtcGFyYWdyYXBoPVwidHJ1ZVwiPkdvdCBpdCEgQ2hlY2sgeW91ciBpbmJveCBmb3IgYW4gZW1haWwgdG8gY29uZmlybSB5b3VyIHN1YnNjcmlwdGlvbi48L2Rpdj4iLCJyZWRpcmVjdFVybCI6Imh0dHBzOi8vZGlnaXRhbC5tYXJrZXRpbmd3aXRocmFqYS5jb20vdGhhbmtzIn0sImNvaSI6ZmFsc2UsInNob3dGb3JSZXR1cm5WaXNpdG9ycyI6dHJ1ZSwibm90aWZpY2F0aW9uIjpmYWxzZSwiZ2RwciI6eyJhY2NlcHRzTWFya2V0aW5nIjpmYWxzZSwicHJpdmFjeVBvbGljeSI6eyJlbmFibGVkIjpmYWxzZSwibWFuZGF0b3J5IjpmYWxzZX19LCJ0cmFja2luZ0NvbmZpZyI6eyJtZXRhUGl4ZWxJZCI6IiIsImNvb2tpZUJhbm5lckVuYWJsZWQiOmZhbHNlLCJnb29nbGVBbmFseXRpY3NJZCI6IiJ9fQ=="
               style={{ display: "none" }}
             />
             <div className="ff-6a1948234432f64a5ebc660a__container">
