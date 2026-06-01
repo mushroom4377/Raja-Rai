@@ -83,7 +83,7 @@ export default function VimeoThankYouPlayer() {
         <div className="aspect-video">
           <iframe
             ref={iframeRef}
-            src="https://player.vimeo.com/video/1195485455?app_id=122963&controls=0&title=0&byline=0&portrait=0&badge=0&vimeo_logo=0&dnt=1&autopause=1"
+            src="https://player.vimeo.com/video/1197297673?app_id=122963&controls=0&title=0&byline=0&portrait=0&badge=0&vimeo_logo=0&dnt=1&autopause=1"
             className="h-full w-full"
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
