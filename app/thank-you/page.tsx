@@ -1,8 +1,8 @@
 import ThankYouContent from "@/components/ThankYouContent";
 
 export const metadata = {
-  title: "Thank You | Free Digital Marketing Consultation",
-  description: "Your free consultation request has been received.",
+  title: "Thank You | AI Marketing Raja",
+  description: "Your consultation request has been received.",
 };
 
 export default function ThankYouPage() {

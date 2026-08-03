@@ -1,68 +1,14 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
-  title: "Free 1:1 Digital Marketing Consultation Call",
-  description:
-    "Book a free 1:1 consultation call and get a simple digital marketing growth plan for your business.",
-  openGraph: {
-    title: "Get a Free 1:1 Digital Marketing Consultation Call",
-    description:
-      "Discover what's stopping your business from getting consistent customers online.",
-    type: "website",
-    images: [
-      {
-        url: "/main-logo-transparent.png",
-        width: 1200,
-        height: 630,
-        alt: "Digital marketing consultation",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Free 1:1 Digital Marketing Consultation Call",
-    description:
-      "Get a simple growth plan made for your business.",
-    images: ["/main-logo-transparent.png"],
-  },
+  title: "Free AI Marketing Consultation for Dental Clinics | AI Marketing Raja",
+  description: "Get a free one-to-one AI marketing consultation and a customized marketing plan for your dental clinic.",
+  openGraph: { title: "Free AI Marketing Consultation for Dental Clinics", description: "Discover practical strategies to attract more qualified dental patients.", type: "website", images: [{ url: "/ai-marketing-raja-teal.png", alt: "AI Marketing Raja" }] },
+  twitter: { card: "summary_large_image", title: "Free AI Marketing Consultation for Dental Clinics", description: "Get a customized marketing plan for your dental clinic.", images: ["/ai-marketing-raja-teal.png"] },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <head>
-        <Script id="meta-pixel" strategy="beforeInteractive">
-          {`!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '996052636128067');
-fbq('track', 'PageView');`}
-        </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=996052636128067&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-      </head>
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body>{children}</body></html>;
 }
